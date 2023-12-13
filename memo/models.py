@@ -33,7 +33,7 @@ class Enseignant(models.Model):
 
 class Niveau(models.Model):
 	libelle = models.CharField(max_length=255)
+	code = models.CharField(max_length=2)
 
-	def __str__(self):
-		return f"Niveau {self.libelle} et ses spécialité {self.specialite}"
+
 
