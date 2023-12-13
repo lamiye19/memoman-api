@@ -58,5 +58,7 @@ class Niveau(models.Model):
 	code = models.CharField(max_length=2)
 
 
-
- 
+class Specialite(models.Model):
+	code = models.CharField(max_length=10)
+	libelle = models.CharField(max_length=200)
+	Niveau = models.ForeignKey(Niveau, on_delete=models.CASCADE, related_name='niveau_specialite')
