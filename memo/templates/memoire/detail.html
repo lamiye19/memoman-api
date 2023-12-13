@@ -1,0 +1,177 @@
+{% extends 'layouts/admin.html' %} 
+{% block title %} Détail d'un mémoire {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+<style>
+  /* Hide the input element */
+  #id_etudiant {
+    display: none;
+  }
+</style>
+
+{% endblock stylesheets %} {% block content %} {% if error %}
+<div
+  class="alert alert-danger alert-dismissible text-black ms-auto me-1 col-12"
+  role="alert"
+>
+  {{ error }}
+  <button
+    type="button"
+    class="btn-close"
+    data-dismiss="alert"
+    aria-label="Close"
+  ></button>
+</div>
+{% endif %}
+
+<div class="card card_border p-1 mb-4">
+  <!-- card heading -->
+  <div class="cards__heading">
+    <h3>{{ memo }}</h3>
+  </div>
+  <!-- //card heading -->
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-10 offset-md-1">
+        <section class="w3l-faq-block" id="faq">
+          <div class="accordion" id="accordionExample">
+
+            <div class="card px-3 py-2 mb-4 shadow accordion-item">
+              <div class="d-flex justify-content-between accordion-header bg-transparent py-3"
+                data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                <h2 class="" id="headingOne"> 
+                  <small class="badge bg-primary text-white">1</small> 
+                  <span class="badge fs-1">Informations</span>
+                </h2>
+                <i class="fa fa-angle-down btn"></i>
+              </div>
+              <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div class="accordion-body">
+                  <table class="table border-0">
+                    <tr>
+                      <td>Etudiant</td>
+                      <td>{{ memo.etudiant.utilisateur.get_full_name }}</td>
+                    </tr>
+                    <tr>
+                      <td>Thème</td>
+                      <td>{{ memo.theme }}</td>
+                    </tr>
+                    <tr>
+                      <td>Entreprise</td>
+                      <td>{{ memo.nom_entreprise }}</td>
+                    </tr>
+                    <tr>
+                      <td>Directeur de mémoire</td>
+                      <td>{{ memo.directeur.utilisateur.get_full_name }}</td>
+                    </tr>
+                    <tr>
+                      <td>Tags</td>
+                      <td>{{ memo.tags }}</td>
+                    </tr>
+                    <tr>
+                      <td>Année</td>
+                      <td>{{ memo.annee }}</td>
+                    </tr>
+                    <tr>
+                      <td>Statut</td>
+                      <td>{% if memo.statut %}<span class="badge badge-dot">
+                        <i class="bg-success"> </i> Validé
+                      </span>
+                      {% else %}
+                      <span class="badge badge-dot">
+                        <i class="bg-danger"></i> Non validé
+                      </span> 
+                      {% endif %}</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="card px-3 py-2 mb-4 shadow accordion-item">
+              <div class="d-flex justify-content-between accordion-header bg-transparent py-3"
+                data-toggle="collapse" data-target="#collapseContexte" aria-expanded="false" aria-controls="collapseContexte">
+                <h2 class="" id="headingContexte"> 
+                  <small class="badge bg-primary text-white">2</small> 
+                  <span class="badge fs-1">Contexte</span>
+                </h2>
+                <i class="fa fa-angle-down btn"></i>
+              </div>
+              <div id="collapseContexte" class="accordion-collapse collapse" aria-labelledby="headingContexte" data-parent="#accordionExample">
+                <div class="accordion-body">
+                  <pre class="text-wrap">{{ memo.contexte }}</pre>
+                </div>
+              </div>
+            </div>
+            <div class="card px-3 py-2 mb-4 shadow accordion-item">
+              <div class="d-flex justify-content-between accordion-header bg-transparent py-3"
+                data-toggle="collapse" data-target="#collapseProblematique" aria-expanded="false" aria-controls="collapseProblematique">
+                <h2 class="" id="headingProblematique"> 
+                  <small class="badge bg-primary text-white">3</small> 
+                  <span class="badge fs-1">Problématique</span>
+                </h2>
+                <i class="fa fa-angle-down btn"></i>
+              </div>
+              <div id="collapseProblematique" class="accordion-collapse collapse" aria-labelledby="headingProblematique" data-parent="#accordionExample">
+                <div class="accordion-body">
+                  <pre class="text-wrap"> {{ memo.problematique }}</pre>
+                </div>
+              </div>
+            </div>
+            <div class="card px-3 py-2 mb-4 shadow accordion-item">
+              <div class="d-flex justify-content-between accordion-header bg-transparent py-3"
+                data-toggle="collapse" data-target="#collapseObjectifs" aria-expanded="false" aria-controls="collapseObjectifs">
+                <h2 class="" id="headingObjectifs"> 
+                  <small class="badge bg-primary text-white">4</small> 
+                  <span class="badge fs-1">Objectifs</span>
+                </h2>
+                <i class="fa fa-angle-down btn"></i>
+              </div>
+              <div id="collapseObjectifs" class="accordion-collapse collapse" aria-labelledby="headingObjectifs" data-parent="#accordionExample">
+                <div class="accordion-body">
+                  <pre class="text-wrap"> {{ memo.objectifs }}</pre>
+                </div>
+              </div>
+            </div>
+            <div class="card px-3 py-2 mb-4 shadow accordion-item">
+              <div class="d-flex justify-content-between accordion-header bg-transparent py-3"
+                data-toggle="collapse" data-target="#collapseResultats" aria-expanded="false" aria-controls="collapseResultats">
+                <h2 class="" id="headingResultats"> 
+                  <small class="badge bg-primary text-white">5</small> 
+                  <span class="badge fs-1">Resultats</span>
+                </h2>
+                <i class="fa fa-angle-down btn"></i>
+              </div>
+              <div id="collapseResultats" class="accordion-collapse collapse" aria-labelledby="headingResultats" data-parent="#accordionExample">
+                <div class="accordion-body">
+                  <pre class="text-wrap"> {{ memo.resultats }}</pre>
+                </div>
+              </div>
+            </div>
+            <div class="card px-3 py-2 mb-4 shadow accordion-item">
+              <div class="d-flex justify-content-between accordion-header bg-transparent py-3"
+                data-toggle="collapse" data-target="#collapsePlaning" aria-expanded="false" aria-controls="collapsePlaning">
+                <h2 class="" id="headingPlaning"> 
+                  <small class="badge bg-primary text-white">6</small> 
+                  <span class="badge fs-1">Planing</span>
+                </h2>
+                <i class="fa fa-angle-down btn"></i>
+              </div>
+              <div id="collapsePlaning" class="accordion-collapse collapse" aria-labelledby="headingPlaning" data-parent="#accordionExample">
+                <div class="accordion-body">
+                  <pre class="text-wrap"> {{ memo.planing }}</pre>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}{% endblock javascripts %}
