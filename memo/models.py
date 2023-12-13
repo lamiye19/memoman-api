@@ -30,6 +30,7 @@ class Enseignant(models.Model):
 
 	def __str__(self):
 		return f"Enseignant {self.utilisateur.username}"
+
 	
 class Memoire(models.Model):
 	theme = models.CharField(max_length=250)
@@ -50,3 +51,12 @@ class Memoire(models.Model):
 
 	def __str__(self):
 		return f"Memoire {self.etudiant}"
+
+
+class Niveau(models.Model):
+	libelle = models.CharField(max_length=255)
+
+	def __str__(self):
+		return f"Niveau {self.libelle} et ses spécialité {self.specialite}"
+
+ 
