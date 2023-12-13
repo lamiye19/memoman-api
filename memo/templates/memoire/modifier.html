@@ -1,0 +1,115 @@
+{% extends 'layouts/admin.html' %} 
+{% block title %} Modification d'un mémoire {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+<style>
+  /* Hide the input element */
+  #id_etudiant {
+    display: none;
+  }
+</style>
+
+{% endblock stylesheets %} {% block content %} {% if error %}
+<div
+  class="alert alert-danger alert-dismissible text-black ms-auto me-1 col-12"
+  role="alert"
+>
+  {{ error }}
+  <button
+    type="button"
+    class="btn-close"
+    data-bs-dismiss="alert"
+    aria-label="Close"
+  ></button>
+</div>
+{% endif %}
+
+<div class="row">
+  <div class="col">
+    <div class="card ">
+      <!-- Card header -->
+      <div class="card-header bg-primary border-1">
+        <div class="d-flex justify-content-between">
+          <div class="col-12">
+            <h4 class="fw-bold py-3 mb-4 text-white">Modifier un mémoire</h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-body">
+          <form class="row g-5" method="POST">
+            {% if form %}
+            {% csrf_token %} 
+
+            {{ form.etudiant }}
+
+            <div class="col-12 mb-3">
+              <label for="" class="form-label mb-2">Thème</label>
+              {{ form.theme }} {% if form.theme.errors %}
+              <div class="invalid-feedback">{{ form.theme.error }}</div>
+              {% endif %}
+            </div>
+            <div class="col-12 mb-3">
+              <label for="" class="form-label mb-2">Nom de l'entreprise</label>
+              {{ form.nom_entreprise }} {% if form.nom_entreprise.errors %}
+              <div class="invalid-feedback">
+                {{ form.nom_entreprise.error }}
+              </div>
+              {% endif %}
+            </div>
+            <div class="col-12 mb-3">
+              <label for="" class="form-label mb-2">Tags</label>
+              <div class="text-small text-muted">
+                Séparer les tags avec des virgules
+              </div>
+              {{ form.tags }} {% if form.tags.errors %}
+              <div class="invalid-feedback">{{ form.tags.error }}</div>
+              {% endif %}
+            </div>
+            <div class="col-12 mb-3">
+              <label for="" class="form-label mb-2">Contexte</label>
+              {{ form.contexte }} {% if form.contexte.errors %}
+              <div class="invalid-feedback">{{ form.contexte.error }}</div>
+              {% endif %}
+            </div>
+            <div class="col-12 mb-3">
+              <label for="" class="form-label mb-2">Problématique</label>
+              {{ form.problematique }} {% if form.problematique.errors %}
+              <div class="invalid-feedback">{{ form.problematique.error }}</div>
+              {% endif %}
+            </div>
+            <div class="col-12 mb-3">
+              <label for="" class="form-label mb-2">Objectifs</label>
+              {{ form.objectifs }} {% if form.objectifs.errors %}
+              <div class="invalid-feedback">{{ form.objectifs.error }}</div>
+              {% endif %}
+            </div>
+            <div class="col-12 mb-3">
+              <label for="" class="form-label mb-2">Résultats</label>
+              {{ form.resultats }} {% if form.resultats.errors %}
+              <div class="invalid-feedback">{{ form.resultats.error }}</div>
+              {% endif %}
+            </div>
+            <div class="col-12 mb-3">
+              <label for="" class="form-label mb-2">Planing</label>
+              {{ form.planing }} {% if form.planing.errors %}
+              <div class="invalid-feedback">{{ form.planing.error }}</div>
+              {% endif %}
+            </div>
+
+            <div class="col-6 text-center">
+              <button type="submit" class="btn btn-primary my-4">
+                Modifier mémoire
+              </button>
+            </div>
+            {% endif %}
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+  {% endblock content %}
+
+  <!-- Specific JS goes HERE -->
+  {% block javascripts %}{% endblock javascripts %}

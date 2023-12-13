@@ -1,0 +1,175 @@
+{% extends 'layouts/admin.html' %} 
+{% block title %} Liste des utilisateurs {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %} 
+{% block content %} 
+{% if success %}
+<div
+  class="alert alert-success alert-dismissible text-black ms-auto me-1 col-6"
+  role="alert"
+>
+  {{ success }}
+  <button
+    type="button"
+    class="btn-close"
+    data-bs-dismiss="alert"
+    aria-label="Close"
+  ></button>
+</div>
+{% endif %} {% if error %}
+<div
+  class="alert alert-danger alert-dismissible text-black ms-auto me-1 col-6"
+  role="alert"
+>
+  {{ error }}
+  <button
+    type="button"
+    class="btn-close"
+    data-bs-dismiss="alert"
+    aria-label="Close"
+  ></button>
+</div>
+{% endif %}
+
+<div class="row">
+  <div class="col">
+    <div class="card card-white">
+      <!-- Card header -->
+      <div class="card-header bg-white border-1">
+        <div class="d-flex justify-content-between">
+          <div class="col-md-9">
+            <h4 class="fw-bold py-3 mb-4">Liste des utilisateurs ( {{ utilisateurs.count }} )</h4>
+          </div>
+          <div class="col-md-3">
+            <a
+              href="{% url 'users.liste' %}"
+              type="button"
+              class="btn btn-primary text-white fw-bold"
+            >
+              <i class="menu-icon tf-icons bx bx-plus"></i>
+              Nouveau
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- Light table -->
+      <div class="table-responsive">
+        <table class="table align-items-center table-flush table-striped">
+          <thead class="thead">
+            <tr class="text-nowrap fw-bolder">
+              <th scope="col">#</th>
+              <th scope="col">Nom</th>
+              <th scope="col">Prénom</th>
+              <th scope="col">Username</th>
+              <th scope="col">Email</th>
+              <th scope="col">Téléphone</th>
+              <th scope="col">Statut</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody class="list">
+            {% for user in utilisateurs %}
+            <tr>
+              <th scope="row">{{ forloop.counter }}</th>
+              <td>{{ user.first_name }}</td>
+              <td>{{ user.last_name }}</td>
+              <td>{{ user.username }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.telephone }}</td>
+              <td>
+                {% if user.is_active %}
+                <span class="badge badge-dot mr-4">
+                  <i class="bg-success"></i>
+                </span>
+                {% else %}
+                <span class="badge badge-dot mr-4">
+                  <i class="bg-danger"></i>
+                </span> 
+                {% endif %}
+              </td>
+              <td>
+                <div class="dropdown">
+                  <button
+                    type="button"
+                    class="btn p-0 dropdown-toggle hide-arrow"
+                    data-bs-toggle="dropdown"
+                  >
+                    <i class="bx bx-dots-vertical-rounded"></i>
+                  </button>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href=""
+                      ><i class="bx bx-edit-alt me-1"></i>
+                      Modifier
+                    </a>
+                    <form
+                      action=""
+                      method="post"
+                      class=""
+                      onsubmit="if(confirm('Vous êtes sur de vouloir supprimer?')){return true;} else {return false;}"
+                    >
+                      <button class="dropdown-item text-danger" type="submit">
+                        <i class="bx bx-trash me-1"></i>
+                        Supprimer
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+            {% if not utilisateurs %}
+            <tr> 
+              <td colspan="8" class="text-center">Pas de données</td>
+            </tr>
+            {% endif %}
+          </tbody>
+          <thead class="thead">
+            <tr class="text-nowrap fw-bolder">
+              <th scope="col">#</th>
+              <th scope="col">Nom</th>
+              <th scope="col">Prénom</th>
+              <th scope="col">Username</th>
+              <th scope="col">Email</th>
+              <th scope="col">Téléphone</th>
+              <th scope="col">Statut</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <!-- Card footer -->
+      <div class="card-footer py-4">
+        <nav aria-label="...">
+          <ul class="pagination justify-content-end mb-0">
+            <li class="page-item disabled">
+              <a class="page-link" href="#" tabindex="-1">
+                <i class="fas fa-angle-left"></i>
+                <span class="sr-only">Previous</span>
+              </a>
+            </li>
+            <li class="page-item active">
+              <a class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="#"
+                >2 <span class="sr-only">(current)</span></a
+              >
+            </li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#">
+                <i class="fas fa-angle-right"></i>
+                <span class="sr-only">Next</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}{% endblock javascripts %}
