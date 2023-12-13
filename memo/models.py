@@ -30,3 +30,10 @@ class Enseignant(models.Model):
 
 	def __str__(self):
 		return f"Enseignant {self.utilisateur.username}"
+
+class Niveau(models.Model):
+	libelle = models.CharField(max_length=255)
+
+	def __str__(self):
+		return f"Niveau {self.libelle} et ses spécialité {self.specialite}"
+
