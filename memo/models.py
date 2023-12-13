@@ -31,6 +31,7 @@ class Enseignant(models.Model):
 
 	def __str__(self):
 		return f"Enseignant {self.utilisateur.username}"
+
 	
 class Memoire(models.Model):
 	theme = models.CharField(max_length=250)
@@ -51,3 +52,14 @@ class Memoire(models.Model):
 
 	def __str__(self):
 		return f"Memoire - {self.annee} - {self.etudiant}"
+
+
+class Niveau(models.Model):
+	libelle = models.CharField(max_length=255)
+	code = models.CharField(max_length=2)
+
+
+class Specialite(models.Model):
+	code = models.CharField(max_length=10)
+	libelle = models.CharField(max_length=200)
+	Niveau = models.ForeignKey(Niveau, on_delete=models.CASCADE, related_name='niveau_specialite')

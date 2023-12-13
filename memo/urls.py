@@ -28,7 +28,7 @@ urlpatterns = [
     path('memoires', views.memoires, name="memoires.liste"),
     path('memoires/ajouter', views.memoires_add, name="memoires.ajouter"),
     path('memoires/modifier/<id>', views.memoires_update, name="memoires.modifier"),
-    path('memoires/<id>', views.user_detail, name="memoires.detail"),
+    path('memoires/<id>', views.memoires_detail, name="memoires.detail"),
 
 
 ] + static(settings.STATIC_URL)

@@ -1,8 +1,9 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+from django.contrib import messages
 
 from .models import *
-from .forms import MemoireForm
+from .forms import *
 
 # Create your views here.
 
@@ -66,6 +67,52 @@ def niveaux(request):
 
     return render(request, 'niveau/liste.html', {'niveaux': elt})
 
+"""
+ Niveau
+"""
+class NiveauViews:
+    @staticmethod
+    def ajouter_niveau(request):
+        if request.method == 'POST':
+            form = NiveauForm(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Niveau ajouté avec succès.')
+                return redirect('niveau_list')  # Redirige vers une autre vue après l'ajout
+        else:
+            form = NiveauForm()
+
+        return render(request, 'ajouter_niveau.html', {'form': form})
+
+    @staticmethod
+    def modifier_niveau(request, niveau_id):
+        niveau = get_object_or_404(Niveau, pk=niveau_id)
+
+        if request.method == 'POST':
+            form = NiveauForm(request.POST, instance=niveau)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Niveau modifié avec succès.')
+                return redirect('niveau_list')  # Redirige vers une autre vue après la modification
+        else:
+            form = NiveauForm(instance=niveau)
+
+        return render(request, 'modifier_niveau.html', {'form': form, 'niveau': niveau})
+
+    @staticmethod
+    def recherche_niveau(request):
+        query = request.GET.get('q', '')
+        niveaux = Niveau.objects.filter(libelle__icontains=query)
+        return render(request, 'recherche_niveau.html', {'niveaux': niveaux})
+
+    @staticmethod
+    def supprimer_niveau(request, niveau_id):
+        niveau = get_object_or_404(Niveau, pk=niveau_id)
+        niveau.delete()
+        messages.success(request, 'Niveau supprimé avec succès.')
+        return redirect('niveau_list')
+
+
 
 # Spécialité
 def specialites(request):
@@ -106,7 +153,7 @@ def memoires_add(request):
         form = MemoireForm()
     return render(request, 'memoire/ajouter.html', {'form': form})
 
-def user_detail(request, id: int):
+def memoires_detail(request, id: int):
     try:
         elt = Memoire.objects.get(id=id)
     except Memoire.DoesNotExist:
@@ -126,3 +173,5 @@ def memoires_update(request, id: int):
         form = MemoireForm(instance=objet)
     
     return render(request, 'memoire/modifier.html', {'form': form})
+
+
