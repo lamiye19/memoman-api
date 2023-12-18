@@ -10,7 +10,7 @@ from models import Niveau
 class NiveauForm:
     class Meta:
         model = Niveau
-        fields = ['libelle', 'specialite']
+        fields = '__all__'
 
 
 class NiveauViews:
@@ -54,6 +54,10 @@ class NiveauViews:
         niveau.delete()
         messages.success(request, 'Niveau supprimé avec succès.')
         return redirect('niveau_list')
+
+    def affiche_niveau(request):
+        niveaux = Niveau.objects.all()
+        return render(request, 'niveau_list.html', {'niveaux': niveaux})
 
 
 
