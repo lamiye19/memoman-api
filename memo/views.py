@@ -5,6 +5,7 @@ from django.contrib import messages
 from .models import *
 from .forms import *
 
+
 # Create your views here.
 
 
@@ -14,6 +15,7 @@ def login(request):
 
 def register(request):
     return render(request, 'auth/register.html')
+
 
 def custom_404(request, exception):
     return render(request, 'errors/404.html', status=404)
@@ -67,9 +69,12 @@ def niveaux(request):
 
     return render(request, 'niveau/liste.html', {'niveaux': elt})
 
+
 """
  Niveau
 """
+
+
 class NiveauViews:
     @staticmethod
     def ajouter_niveau(request):
@@ -112,6 +117,9 @@ class NiveauViews:
         messages.success(request, 'Niveau supprimé avec succès.')
         return redirect('niveau_list')
 
+    def affiche_niveau(request):
+        niveaux = Niveau.objects.all()
+        return render(request, 'niveau_list.html', {'niveaux': niveaux})
 
 
 # Spécialité
@@ -121,11 +129,13 @@ def specialites(request):
 
     return render(request, 'specialite/liste.html', {'specialites': elt})
 
+
 # Mémoire
 def memoires(request):
     elt = Memoire.objects.all()
 
     return render(request, 'memoire/liste.html', {'memoires': elt})
+
 
 def memoires_add(request):
     if request.method == 'POST':
@@ -136,13 +146,13 @@ def memoires_add(request):
 
             try:
                 instance = form.save(commit=False)
-        
+
                 # Associer l'utilisateur connecté au champ etudiant
                 # form.etudiant = user.etudiant
 
                 instance.etudiant = Etudiant.objects.get(id=2)
                 instance.save()  # Enregistrer les données su form pour créer une instance de Memoire
-                
+
                 # Redirection vers la liste des memoires
                 return redirect(reverse('memoires.liste'))
             except Exception as e:
@@ -153,6 +163,7 @@ def memoires_add(request):
         form = MemoireForm()
     return render(request, 'memoire/ajouter.html', {'form': form})
 
+
 def memoires_detail(request, id: int):
     try:
         elt = Memoire.objects.get(id=id)
@@ -160,6 +171,7 @@ def memoires_detail(request, id: int):
         raise ('Introuvable')
 
     return render(request, 'memoire/detail.html', {'memo': elt})
+
 
 def memoires_update(request, id: int):
     objet = get_object_or_404(Memoire, id=id)
@@ -171,7 +183,5 @@ def memoires_update(request, id: int):
             return redirect(reverse('memoires.liste'))
     else:
         form = MemoireForm(instance=objet)
-    
+
     return render(request, 'memoire/modifier.html', {'form': form})
-
-
