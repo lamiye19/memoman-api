@@ -1,0 +1,140 @@
+<script
+			  src="https://code.jquery.com/jquery-3.7.1.min.js"
+			  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+			  crossorigin="anonymous"></script>
+
+<!-- datatables.net  & Plugins -->
+<script src="/static/assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="/static/assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="/static/assets/vendor/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+<script src="/static/assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<!-- <script src="/static/assets/vendor/datatables.net-buttons/js/buttons.bootstrap4.min.js"></script>
+ -->
+<script src="/static/assets/vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="/static/assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="/static/assets/vendor/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+
+
+<script>
+  // When the user scrolls down 20px from the top of the document, show the button
+  window.onscroll = function () {
+    scrollFunction();
+  };
+
+  function scrollFunction() {
+    if (
+      document.body.scrollTop > 20 ||
+      document.documentElement.scrollTop > 20
+    ) {
+      document.getElementById("movetop").style.display = "block";
+    } else {
+      document.getElementById("movetop").style.display = "none";
+    }
+  }
+
+  // When the user clicks on the button, scroll to the top of the document
+  function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
+</script>
+
+<script src="/static/assets/js/jquery-3.3.1.min.js"></script>
+<script src="/static/assets/js/jquery-1.10.2.min.js"></script>
+
+<!-- chart js -->
+<script src="/static/assets/js/Chart.min.js"></script>
+<script src="/static/assets/js/utils.js"></script>
+<!-- //chart js -->
+
+<!-- Different scripts of charts.  Ex.Barchart, Linechart -->
+<script src="/static/assets/js/bar.js"></script>
+<script src="/static/assets/js/linechart.js"></script>
+<!-- //Different scripts of charts.  Ex.Barchart, Linechart -->
+
+<script src="/static/assets/js/jquery.nicescroll.js"></script>
+<script src="/static/assets/js/scripts.js"></script>
+
+<!-- close script -->
+<script>
+  var closebtns = document.getElementsByClassName("close-grid");
+  var i;
+
+  for (i = 0; i < closebtns.length; i++) {
+    closebtns[i].addEventListener("click", function () {
+      this.parentElement.style.display = "none";
+    });
+  }
+</script>
+<!-- //close script -->
+
+<!-- disable body scroll when navbar is in active -->
+<script>
+  $(function () {
+    $(".sidebar-menu-collapsed").click(function () {
+      $("body").toggleClass("noscroll");
+    });
+  });
+</script>
+<!-- disable body scroll when navbar is in active -->
+
+<!-- loading-gif Js -->
+<script src="/static/assets/js/modernizr.js"></script>
+<script>
+  $(window).load(function () {
+    // Animate loader off screen
+    $(".se-pre-con").fadeOut("slow");
+  });
+</script>
+<!--// loading-gif Js -->
+
+<!-- Bootstrap Core JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="/static/assets/js/bootstrap.min.js"></script>
+
+
+<script>
+  $(document).ready(function() {    
+    $("#example1").dataTable({
+        "responsive": true, 
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true, 
+        "fixedHeader": true,
+      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+      $('#example2').dataTable({
+        "paging": false,
+        "lengthChange": false,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+      });
+      $('#example3').dataTable({
+        "paging": false,
+        "lengthChange": false,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+      });
+      $('#example4').dataTable({
+        "paging": false,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": true,
+        "responsive": true,
+        dom: 'Bfrtip',
+          colReorder: true,
+          buttons: [
+              'colvis'
+          ],
+      });
+    });
+  </script>
