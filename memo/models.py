@@ -1,3 +1,4 @@
+import datetime
 from django.db import models
 
 from django.contrib.auth.models import AbstractUser
@@ -44,13 +45,13 @@ class Memoire(models.Model):
 	cote = models.CharField(max_length=250, null=True, blank=True)
 	tags = models.CharField(max_length=250, null=True, blank=True)
 	fichier = models.FileField(upload_to='memoires/', null=True, blank=True)
-	etudiant = models.ForeignKey(Etudiant, on_delete=models.CASCADE, related_name='auteur')
+	etudiant = models.ForeignKey(Etudiant, on_delete=models.CASCADE, related_name='auteur', blank=True)
 	directeur = models.ForeignKey(Enseignant, on_delete=models.CASCADE, related_name='directeur', null=True, blank=True)
-	annee = models.IntegerField(default=2023)
+	annee = models.IntegerField(default=datetime.datetime.now().year, blank=True)
 	created_at = models.DateTimeField(auto_now_add=True, blank=True)
 
 	def __str__(self):
-		return f"Memoire {self.etudiant}"
+		return f"Memoire - {self.annee} - {self.etudiant}"
 
 
 class Niveau(models.Model):
