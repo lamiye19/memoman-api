@@ -12,16 +12,7 @@ class Utilisateur(AbstractUser):
 
 	def __str__(self) -> str:
 		return super().__str__()
-	
-
-class Etudiant(models.Model):
-	utilisateur = models.OneToOneField(Utilisateur, on_delete=models.CASCADE)
-	num_etudiant = models.CharField(max_length=15)
-
-
-	def __str__(self):
-		return f"Étudiant {self.utilisateur.username}"
-	
+		
 
 
 class Enseignant(models.Model):
@@ -33,6 +24,31 @@ class Enseignant(models.Model):
 		return f"Enseignant {self.utilisateur.username}"
 
 	
+
+class Niveau(models.Model):
+	libelle = models.CharField(max_length=255)
+	code = models.CharField(max_length=2)
+
+
+class Specialite(models.Model):
+	code = models.CharField(max_length=10)
+	libelle = models.CharField(max_length=200)
+	Niveau = models.ForeignKey(Niveau, on_delete=models.CASCADE, related_name='niveau_specialite')
+
+
+
+class Etudiant(models.Model):
+	utilisateur = models.OneToOneField(Utilisateur, on_delete=models.CASCADE)
+	specialite = models.OneToOneField(Specialite, on_delete=models.CASCADE)
+	num_etudiant = models.CharField(max_length=15)
+
+
+	def __str__(self):
+		return f"Étudiant {self.utilisateur.username}"
+	
+
+
+
 class Memoire(models.Model):
 	theme = models.CharField(max_length=250)
 	contexte = models.TextField()
@@ -53,13 +69,3 @@ class Memoire(models.Model):
 	def __str__(self):
 		return f"Memoire - {self.annee} - {self.etudiant}"
 
-
-class Niveau(models.Model):
-	libelle = models.CharField(max_length=255)
-	code = models.CharField(max_length=2)
-
-
-class Specialite(models.Model):
-	code = models.CharField(max_length=10)
-	libelle = models.CharField(max_length=200)
-	Niveau = models.ForeignKey(Niveau, on_delete=models.CASCADE, related_name='niveau_specialite')
