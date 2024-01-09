@@ -4,17 +4,59 @@ from django.contrib import messages
 
 from .models import *
 from .forms import *
+from django.contrib.auth import login, authenticate
 
 
 # Create your views here.
 
 
-def login(request):
-    return render(request, 'auth/login.html')
-
-
 def register(request):
-    return render(request, 'auth/register.html')
+    if request.method == 'POST':
+        user_form = UtilisateurCreationForm(request.POST)
+        etudiant_form = EtudiantCreationForm(request.POST)
+        enseignant_form = EnseignantCreationForm(request.POST)
+
+        if user_form.is_valid():
+            user = user_form.save()
+            if etudiant_form.is_valid():
+                etudiant = etudiant_form.save(commit=False)
+                etudiant.utilisateur = user
+                etudiant.save()
+                login(request, user)
+                return redirect('#')  
+            elif enseignant_form.is_valid():
+                enseignant = enseignant_form.save(commit=False)
+                enseignant.utilisateur = user
+                enseignant.save()
+                login(request, user)
+                return redirect('#') 
+
+    else:
+        user_form = UtilisateurCreationForm()
+        etudiant_form = EtudiantCreationForm()
+        enseignant_form = EnseignantCreationForm()
+
+    return render(request, 'auth/register.html', {'user_form': user_form, 'etudiant_form': etudiant_form, 'enseignant_form': enseignant_form})
+
+
+
+
+def login(request):
+    if request.method == 'POST':
+        form = ConnexionForm(request, request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                # Redirigez l'utilisateur après la connexion
+                return redirect('#')  # Remplacez '#' par l'URL souhaitée
+    else:
+        form = ConnexionForm()
+
+    return render(request, 'auth/login.html', {'form': form})
+   
 
 
 def custom_404(request, exception):
