@@ -1,7 +1,3 @@
-{% extends 'layouts/base-fullscreen.html' %}
-
-{% block title %} Register {% endblock title %}
-
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
 
@@ -41,40 +37,42 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
                       </div>
-                      {{ form.username }}
+                      {{ user_form.username }}
                     </div>
+                    <span class="text-error">{{ user_form.username.errors }}</span>
                   </div>
-                  <span class="text-error">{{ form.username.errors }}</span>
 
                   <div class="form-group">
                     <div class="input-group input-group-alternative mb-3">
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                       </div>
-                      {{ form.email }}
+                      {{ user_form.email }}
                     </div>
+                    <span class="text-error">{{ user_form.email.errors }}</span>
                   </div>
-                  <span class="text-error">{{ form.email.errors }}</span>
 
                   <div class="form-group">
                     <div class="input-group input-group-alternative">
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                       </div>
-                      {{ form.password1 }}
+                      {{ user_form.password1 }}
                     </div>
+                    <span class="text-error">{{ user_form.password1.errors }}</span>
                   </div>
-                  <span class="text-error">{{ form.password1.errors }}</span>
 
                   <div class="form-group">
                     <div class="input-group input-group-alternative">
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                       </div>
-                      {{ form.password2 }}
+                      {{ user_form.password2 }}
                     </div>
+                    <span class="text-error">{{ user_form.password2.errors }}</span>
                   </div>
-                  <span class="text-error">{{ form.password2.errors }}</span>
+
+                  <!-- Ajoutez ici les champs spécifiques à l'étudiant ou à l'enseignant selon le besoin -->
 
                   <div class="row my-4">
                     <div class="col-12">

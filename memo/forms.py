@@ -1,6 +1,9 @@
 from django import forms
 import datetime
-from .models import Memoire, Niveau
+from .models import Memoire, Niveau, Utilisateur, Etudiant, Enseignant, Specialite
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
+
 
 
 class NiveauForm:
@@ -23,3 +26,25 @@ class MemoireForm(forms.ModelForm):
     class Meta:
         model = Memoire
         fields = '__all__'
+
+## creation des formulaires de creation de compte etudiant et enseignant 
+        
+class UtilisateurCreationForm(UserCreationForm):
+    class Meta:
+        model = Utilisateur
+        fields = ('username', 'password1', 'password2', 'date_naiss', 'telephone', 'adresse')
+
+class EtudiantCreationForm(forms.ModelForm):
+    class Meta:
+        model = Etudiant
+        fields = ('specialite', 'num_etudiant')
+
+class EnseignantCreationForm(forms.ModelForm):
+    class Meta:
+        model = Enseignant
+        fields = ('code_enseignant', 'matiere')
+
+class ConnexionForm(AuthenticationForm):
+    class Meta:
+        model = Utilisateur
+        fields = ['username', 'password']
