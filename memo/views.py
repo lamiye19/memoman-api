@@ -5,6 +5,7 @@ from django.contrib import messages
 from .models import *
 from .forms import *
 from django.contrib.auth import login, authenticate
+from django.views.decorators.http import require_POST
 
 
 # Create your views here.
@@ -209,21 +210,38 @@ def memoires_add(request):
 def memoires_detail(request, id: int):
     try:
         elt = Memoire.objects.get(id=id)
+        form = MemoireForm(instance=elt)
     except Memoire.DoesNotExist:
         raise ('Introuvable')
 
-    return render(request, 'memoire/detail.html', {'memo': elt})
+    return render(request, 'memoire/detail.html', {'memo': elt, 'form': form})
 
 
 def memoires_update(request, id: int):
-    objet = get_object_or_404(Memoire, id=id)
+    memoire = get_object_or_404(Memoire, id=id)
 
     if request.method == 'POST':
-        form = MemoireForm(request.POST, instance=objet)
-        if form.is_valid():
-            memoire = form.save()
-            return redirect(reverse('memoires.liste'))
+        # Remplir le formulaire avec les données de l'instance
+        form = MemoireForm(request.POST, request.FILES, instance=memoire, fields=request.POST.keys())
+        
+        print(form.has_changed)           
+        if form.is_valid() or form.has_changed():
+            form.save()
+            messages.success(request, 'Memoire updated successfully!')
+            return redirect(reverse('memoires.detail', args=[id]))
+        else:
+            # Add an error message
+            messages.error(request, 'Error updating memoire. Please check the form.')
     else:
-        form = MemoireForm(instance=objet)
+        form = MemoireForm(instance=memoire)
 
     return render(request, 'memoire/modifier.html', {'form': form})
+
+@require_POST
+def memoires_statut(request, id:int):
+    memoire = get_object_or_404(Memoire, id=id)
+    statut_value = int(request.POST.get('valider', -1))  # si "Valider" a été soumis, -1 sinon
+    if(statut_value != -1):
+        memoire.statut = statut_value
+        memoire.save()
+        return redirect(reverse('memoires.detail', args=[id]))

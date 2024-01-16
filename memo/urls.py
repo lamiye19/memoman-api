@@ -28,9 +28,15 @@ urlpatterns = [
     path('memoires', views.memoires, name="memoires.liste"),
     path('memoires/ajouter', views.memoires_add, name="memoires.ajouter"),
     path('memoires/modifier/<id>', views.memoires_update, name="memoires.modifier"),
+    path('memoires/statut/<id>', views.memoires_statut, name="memoires.statut"),
     path('memoires/<id>', views.memoires_detail, name="memoires.detail"),
 
 
-] + static(settings.STATIC_URL)
+] 
+# Serve static files during development
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+# Serve media files during development
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 handler404 = 'memo.views.custom_404'

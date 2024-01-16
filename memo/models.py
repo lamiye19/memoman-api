@@ -54,6 +54,7 @@ class Memoire(models.Model):
 	contexte = models.TextField()
 	problematique = models.TextField()
 	objectifs = models.TextField()
+	existant = models.TextField(null=True)
 	resultats = models.TextField()
 	planing = models.TextField(null=True, blank=True)
 	nom_entreprise = models.CharField(max_length=250, null=True, blank=True)
@@ -65,6 +66,7 @@ class Memoire(models.Model):
 	directeur = models.ForeignKey(Enseignant, on_delete=models.CASCADE, related_name='directeur', null=True, blank=True)
 	annee = models.IntegerField(default=datetime.datetime.now().year, blank=True)
 	created_at = models.DateTimeField(auto_now_add=True, blank=True)
+	est_public = models.BooleanField(default=1)
 
 	def __str__(self):
 		return f"Memoire - {self.annee} - {self.etudiant}"

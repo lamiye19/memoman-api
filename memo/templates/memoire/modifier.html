@@ -80,6 +80,13 @@
               {% endif %}
             </div>
             <div class="col-12 mb-3">
+              <label for="" class="form-label mb-2">Etude de l'existant</label>
+              {{ form.existant }}
+              {% if form.existant.errors %}
+              <div class="invalid-feedback">{{ form.existant.error }}</div>
+              {% endif %}
+            </div>
+            <div class="col-12 mb-3">
               <label for="" class="form-label mb-2">Objectifs</label>
               {{ form.objectifs }} {% if form.objectifs.errors %}
               <div class="invalid-feedback">{{ form.objectifs.error }}</div>
