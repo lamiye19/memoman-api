@@ -4,33 +4,6 @@
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %} 
 {% block content %} 
-{% if success %}
-<div
-  class="alert alert-success alert-dismissible text-black ms-auto me-1 col-6"
-  role="alert"
->
-  {{ success }}
-  <button
-    type="button"
-    class="btn-close"
-    data-bs-dismiss="alert"
-    aria-label="Close"
-  ></button>
-</div>
-{% endif %} {% if error %}
-<div
-  class="alert alert-danger alert-dismissible text-black ms-auto me-1 col-6"
-  role="alert"
->
-  {{ error }}
-  <button
-    type="button"
-    class="btn-close"
-    data-bs-dismiss="alert"
-    aria-label="Close"
-  ></button>
-</div>
-{% endif %}
 
 <div class="row">
   <div class="col">

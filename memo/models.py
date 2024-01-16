@@ -58,7 +58,7 @@ class Memoire(models.Model):
 	resultats = models.TextField()
 	planing = models.TextField(null=True, blank=True)
 	nom_entreprise = models.CharField(max_length=250, null=True, blank=True)
-	statut = models.BooleanField(default=0)
+	statut = models.BooleanField(null=True, blank=True)
 	cote = models.CharField(max_length=250, null=True, blank=True)
 	tags = models.CharField(max_length=250, null=True, blank=True)
 	fichier = models.FileField(upload_to='memoires/', null=True, blank=True)
@@ -71,3 +71,21 @@ class Memoire(models.Model):
 	def __str__(self):
 		return f"Memoire - {self.annee} - {self.etudiant}"
 
+class MemoireHistory(models.Model):
+    memoire = models.ForeignKey('Memoire', on_delete=models.CASCADE)
+    ACTION_CHOICES = (
+        ('ajouter', 'Mémoire ajouté'),
+        ('assigner_directeur', 'Un Directeur a été assigné'),
+        ('reformuler', 'Mémoire reformulation'),
+        ('valider', 'Mémoire validé'),
+        ('rejeter', 'Mémoire rejeté'),
+        ('depot_definitif', 'Dépot définitif effectué'),
+        ('publier', 'Mémoire visible au public ou dépublication effectuée'),
+        ('depublier', 'Mémoire dépublié'),
+    )
+    action = models.CharField(max_length=25, choices=ACTION_CHOICES)
+    date_action = models.DateTimeField(auto_now_add=True)
+    utilisateur = models.ForeignKey(Utilisateur, on_delete=models.SET_NULL, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.memoire} - {self.action}"

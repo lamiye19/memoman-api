@@ -6,18 +6,21 @@
     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
         {% if memo.statut == 1 %}
         {% if memo.fichier %}
-        {% if memo.est_public %}
-        <a class="dropdown-item" href="#">Cacher au public</a>
-        {% else %}
-        <a class="dropdown-item" href="#">Rendre public</a>
-        {% endif %}
+        <form id="pubier" action="{% url 'memoires.modifier.publier' id=memo.id %}" method="post">
+            {% csrf_token %}
+            {% if memo.est_public %}
+            <button name="est_public" value="0" class="dropdown-item" type="submit">Cacher au public</button>
+            {% else %}
+            <button name="est_public" value="1" class="dropdown-item" type="submit">Rendre public</button>
+            {% endif %}
+        </form>
         {% else %}
         <a class="dropdown-item" href="#soumettre_fichier">Soumettre fichier</a>
         {% endif %}
         {% else %}
         <a class="dropdown-item" href="{% url 'memoires.modifier' id=memo.id %}">Reformuler</a>
         {% if memo.directeur %}
-        <form id="valider_statut" action="{% url 'memoires.statut' id=memo.id %}" method="post">
+        <form id="valider_statut" action="{% url 'memoires.modifier.statut' id=memo.id %}" method="post">
             {% csrf_token %}
             <!-- Si le statut est différent de 1 ou si le formulaire n'a pas encore été soumis, affichez le bouton "Valider" -->
             <button class="dropdown-item" type="submit" name="valider" value="1">Valider</button>
