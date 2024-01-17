@@ -11,20 +11,6 @@
   }
 </style>
 {% endblock stylesheets %} {% block content %}
-{% if error %}
-<div
-  class="alert alert-danger alert-dismissible text-black ms-auto me-1 col-12"
-  role="alert"
->
-  {{ error }}
-  <button
-    type="button"
-    class="btn-close"
-    data-bs-dismiss="alert"
-    aria-label="Close"
-  ></button>
-</div>
-{% endif %}
 
 <div class="row">
   <div class="col">
@@ -80,7 +66,14 @@
               {% endif %}
             </div>
             <div class="col-12 mb-3">
-              <label for="" class="form-label mb-2">Objectifs</label>
+              <label for="" class="form-label mb-2">Etude de l'existant</label>
+              {{ form.existant }}
+              {% if form.existant.errors %}
+              <div class="invalid-feedback">{{ form.existant.error }}</div>
+              {% endif %}
+            </div>
+            <div class="col-12 mb-3">
+              <label for="" class="form-label mb-2">Objectifs (principal & secondaires) </label>
               {{ form.objectifs }}
               {% if form.objectifs.errors %}
               <div class="invalid-feedback">{{ form.objectifs.error }}</div>

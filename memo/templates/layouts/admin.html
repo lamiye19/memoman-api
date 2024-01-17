@@ -70,6 +70,26 @@ Author URL: http://w3layouts.com
       <div class="main-content">
         <!-- content -->
 <div class="container-fluid content-top-gap">
+  <div class="d-flex justify-content-end">
+    {% if messages %}
+    {% for message in messages %}
+      {% if message.tags == "success" %}
+      <div class="alert alert-success alert-dismissible text-black ms-auto me-1 col-6"
+      role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">×</button>
+      </div>
+      {% else %}
+      <div class="alert alert-danger alert-dismissible text-black ms-auto me-1 col-6"
+      role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">×</button>
+      </div>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+  </div>
+
   {% block content %}{% endblock content %}
       </div>
 

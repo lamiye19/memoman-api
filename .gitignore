@@ -1,2 +1,4 @@
 db-sem.sqlite3
-memoman/memo/migrations/0*
+memo/migrations/0*
+**/__pycache__/
+.idea
