@@ -74,16 +74,16 @@ Author URL: http://w3layouts.com
     {% if messages %}
     {% for message in messages %}
       {% if message.tags == "success" %}
-      <div class="alert alert-success alert-dismissible text-black ms-auto me-1 col-6"
+      <div class="alert alert-success alert-dismissible text-black ms-auto col-6 d-flex justify-content-end"
       role="alert">
         {{ message }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">×</button>
+        <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">×</button>
       </div>
       {% else %}
-      <div class="alert alert-danger alert-dismissible text-black ms-auto me-1 col-6"
+      <div class="alert alert-danger alert-dismissible text-black ms-auto col-6 d-flex justify-content-between"
       role="alert">
         {{ message }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">×</button>
+        <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">×</button>
       </div>
       {% endif %}
     {% endfor %}

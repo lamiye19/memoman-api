@@ -1,3 +1,6 @@
+import random
+import string
+from django.http import FileResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.contrib import messages
@@ -6,7 +9,21 @@ from .models import *
 from .forms import *
 from django.contrib.auth import login, authenticate
 from django.views.decorators.http import require_POST
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import User
 
+# Create User views here.
+def UserView(request):
+    users = Utilisateur.objects.all()
+    password = 'password'
+    hashed_password = make_password(password)
+    print(hashed_password)
+    for u in users:
+        u.set_password(password)
+        u.save
+        
+    return users
+    #return redirect(reverse('users.liste'))
 
 # Create your views here.
 
@@ -168,7 +185,7 @@ class NiveauViews:
 # Spécialité
 def specialites(request):
     elt = {}
-    # elt = Specialite.objects.all()
+    elt = Specialite.objects.all()
 
     return render(request, 'specialite/liste.html', {'specialites': elt})
 
@@ -192,6 +209,22 @@ def memoires(request):
 
     return render(request, 'memoire/liste.html', {'memoires': elt})
 
+def memoires_public(request):
+    # Filter Memoire objects where est_publier=1
+    elt = Memoire.objects.filter(est_public=1)
+
+    return render(request, 'index.html', {'memoires': elt})
+
+def memoires_detail_public(request, id: int):
+    try:
+        elt = Memoire.objects.get(id=id)
+        form = MemoireForm(instance=elt)
+    except Memoire.DoesNotExist:
+        raise ('Introuvable')
+
+    return render(request, 'memoire/detail-public.html', {'memo': elt})
+
+
 
 def memoires_add(request):
     if request.method == 'POST':
@@ -206,7 +239,7 @@ def memoires_add(request):
                 # Associer l'utilisateur connecté au champ etudiant
                 # memoire.etudiant = user.etudiant
 
-                memoire.etudiant = Etudiant.objects.get(id=2)
+                memoire.etudiant = Etudiant.objects.get(id=1)
                 memoire.save()  # Enregistrer les données du form pour créer une instance de Memoire
 
                 # Enregistrer l'action dans l'historique
@@ -259,8 +292,8 @@ def memoires_statut(request, id:int):
 
     authorized_user = [memoire.directeur.utilisateur]
     error = check_auth(request, id, authorized_user)
-    if error:
-        return error
+    #if error:
+    #    return error
 
     if memoire.statut == 0:
         # Si rejeté, ne permettre aucune autre action
@@ -270,6 +303,9 @@ def memoires_statut(request, id:int):
     
     if(statut_value != -1):
         if statut_value == 1:
+            if not memoire.cote:
+                code = memoire.etudiant.specialite.code
+                memoire.cote =  code + "". join(random.choice(string.digits) for x in range(4))
             # Enregistrement de l'action dans l'historique
             MemoireHistory.objects.create(memoire=memoire, action='valider', utilisateur=request.user)
 
@@ -309,12 +345,14 @@ def memoires_soumettre(request, id):
 
     if 'fichier' in request.FILES:
         form = MemoireForm(request.FILES, instance=memoire, fields=['fichier'])
-        #memoire.fichier = request.FILES['fichier']
+        memoire.fichier = request.FILES['fichier']
         form.save()
-
-        messages.success(request, MSG['success'])
-        MemoireHistory.objects.create(memoire=memoire, action='depot_definitif', utilisateur=memoire.etudiant.utilisateur)
-
+        if memoire.fichier:
+            messages.success(request, MSG['success'])
+            MemoireHistory.objects.create(memoire=memoire, action='depot_definitif', utilisateur=memoire.etudiant.utilisateur)
+        else:
+            messages.error(request, MSG['erreur'])
+            
     return redirect('memoires.detail', id=id)
 
 @require_POST
@@ -335,13 +373,20 @@ def memoires_publier(request, id):
     if(est_public != -1):
         if est_public == 1:
             # Enregistrement de l'action dans l'historique
-            MemoireHistory.objects.create(memoire=memoire, action='publier', utilisateur=request.user)
+            MemoireHistory.objects.create(memoire=memoire, action='publier', utilisateur=authorized_user[0])
 
         elif est_public == 0:
             # Enregistrement de l'action dans l'historique
-            MemoireHistory.objects.create(memoire=memoire, action='depublier', utilisateur=request.user)
+            MemoireHistory.objects.create(memoire=memoire, action='depublier', utilisateur=authorized_user[0])
 
         memoire.est_public = est_public
         memoire.save()
 
     return redirect('memoires.detail', id=id)
+
+def file_view(self, request, id):
+        memoire = get_object_or_404(Memoire, pk=id)
+        pdf_path = url("static/",memoire.fichier.url)
+        with open(pdf_path, 'rb') as pdf_file:
+            response = FileResponse(pdf_file, content_type='application/pdf')
+            return response

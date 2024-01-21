@@ -16,8 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from memo.views import memoires_public, memoires_detail_public, file_view
 
 urlpatterns = [
+    path('', memoires_public, name="accueil"),
+    path('consulter/<id>', memoires_detail_public, name="consulter"),
+    path('consulter/<id>/fichier', file_view, name="consulter.fichier"),
     path('django-admin/', admin.site.urls),
     path('admin/', include('memo.urls'))
 ]
