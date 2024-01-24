@@ -31,181 +31,13 @@
   <div class="card-body">
     <div class="row">
       <div class="col-md-8 col-12">
-        <section class="w3l-faq-block" id="faq">
-          <div class="accordion" id="accordionExample">
-
-            <div class="card px-3 py-2 mb-4 shadow accordion-item">
-              <div class="d-flex justify-content-between accordion-header bg-transparent py-3" data-toggle="collapse"
-                data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                <h2 class="" id="headingOne">
-                  <small class="badge bg-primary text-white">1</small>
-                  <span class="badge fs-1">Informations</span>
-                </h2>
-                <i class="fa fa-angle-down btn"></i>
-              </div>
-              <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-                data-parent="#accordionExample">
-                <div class="accordion-body">
-                  <table class="table border-0">
-                    <tr>
-                      <td>Etudiant</td>
-                      <td>{{ memo.etudiant.utilisateur.get_full_name }}</td>
-                    </tr>
-                    <tr>
-                      <td>Thème</td>
-                      <td class="text-wrap">{{ memo.theme }}</td>
-                    </tr>
-                    <tr>
-                      <td>Entreprise</td>
-                      <td>{{ memo.nom_entreprise }}</td>
-                    </tr>
-                    <tr>
-                      <td>Directeur de mémoire</td>
-                      <td>{{ memo.directeur.utilisateur.get_full_name }}</td>
-                    </tr>
-                    <tr>
-                      <td>Tags</td>
-                      <td>{{ memo.tags }}</td>
-                    </tr>
-                    <tr>
-                      <td>Cote</td>
-                      <td>{{ memo.cote }}</td>
-                    </tr>
-                    <tr>
-                      <td>Année</td>
-                      <td>{{ memo.annee }}</td>
-                    </tr>
-                    <tr>
-                      <td>Rapport de mémoire</td>
-                      <td>
-                        {% if memo.fichier %} 
-                        <a href="{{ memo.fichier.url }}" target="_blank" rel=""><i class="fa fa-file text-danger"></i> </a> 
-                        {% else %}
-                        Indisponible
-                        {% endif %}</td>
-                    </tr>
-                    <tr>
-                      <td>Statut</td>
-                      <td>{% if memo.statut %}<span class="badge badge-dot">
-                          <i class="bg-success"> </i> Validé
-                        </span>
-                        {% else %}
-                        <span class="badge badge-dot">
-                          <i class="bg-danger"></i> Non validé
-                        </span>
-                        {% endif %}
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-            </div>
-
-            <div class="card px-3 py-2 mb-4 shadow accordion-item">
-              <div class="d-flex justify-content-between accordion-header bg-transparent py-3" data-toggle="collapse"
-                data-target="#collapseContexte" aria-expanded="false" aria-controls="collapseContexte">
-                <h2 class="" id="headingContexte">
-                  <small class="badge bg-primary text-white">2</small>
-                  <span class="badge fs-1">Contexte</span>
-                </h2>
-                <i class="fa fa-angle-down btn"></i>
-              </div>
-              <div id="collapseContexte" class="accordion-collapse collapse" aria-labelledby="headingContexte"
-                data-parent="#accordionExample">
-                <div class="accordion-body">
-                  <pre class="text-wrap">{{ memo.contexte }}</pre>
-                </div>
-              </div>
-            </div>
-            <div class="card px-3 py-2 mb-4 shadow accordion-item">
-              <div class="d-flex justify-content-between accordion-header bg-transparent py-3" data-toggle="collapse"
-                data-target="#collapseProblematique" aria-expanded="false" aria-controls="collapseProblematique">
-                <h2 class="" id="headingProblematique">
-                  <small class="badge bg-primary text-white">3</small>
-                  <span class="badge fs-1">Problématique</span>
-                </h2>
-                <i class="fa fa-angle-down btn"></i>
-              </div>
-              <div id="collapseProblematique" class="accordion-collapse collapse" aria-labelledby="headingProblematique"
-                data-parent="#accordionExample">
-                <div class="accordion-body">
-                  <pre class="text-wrap"> {{ memo.problematique }}</pre>
-                </div>
-              </div>
-            </div>
-            <div class="card px-3 py-2 mb-4 shadow accordion-item">
-              <div class="d-flex justify-content-between accordion-header bg-transparent py-3" data-toggle="collapse"
-                data-target="#collapseExistant" aria-expanded="false" aria-controls="collapseExistant">
-                <h2 class="" id="headingExistant">
-                  <small class="badge bg-primary text-white">4</small>
-                  <span class="badge fs-1">Etude de l'existant</span>
-                </h2>
-                <i class="fa fa-angle-down btn"></i>
-              </div>
-              <div id="collapseExistant" class="accordion-collapse collapse" aria-labelledby="headingExistant"
-                data-parent="#accordionExample">
-                <div class="accordion-body">
-                  <pre class="text-wrap"> {{ memo.existant }}</pre>
-                </div>
-              </div>
-            </div>
-            <div class="card px-3 py-2 mb-4 shadow accordion-item">
-              <div class="d-flex justify-content-between accordion-header bg-transparent py-3" data-toggle="collapse"
-                data-target="#collapseObjectifs" aria-expanded="false" aria-controls="collapseObjectifs">
-                <h2 class="" id="headingObjectifs">
-                  <small class="badge bg-primary text-white">5</small>
-                  <span class="badge fs-1">Objectifs</span>
-                </h2>
-                <i class="fa fa-angle-down btn"></i>
-              </div>
-              <div id="collapseObjectifs" class="accordion-collapse collapse" aria-labelledby="headingObjectifs"
-                data-parent="#accordionExample">
-                <div class="accordion-body">
-                  <pre class="text-wrap"> {{ memo.objectifs }}</pre>
-                </div>
-              </div>
-            </div>
-            <div class="card px-3 py-2 mb-4 shadow accordion-item">
-              <div class="d-flex justify-content-between accordion-header bg-transparent py-3" data-toggle="collapse"
-                data-target="#collapseResultats" aria-expanded="false" aria-controls="collapseResultats">
-                <h2 class="" id="headingResultats">
-                  <small class="badge bg-primary text-white">6</small>
-                  <span class="badge fs-1">Resultats</span>
-                </h2>
-                <i class="fa fa-angle-down btn"></i>
-              </div>
-              <div id="collapseResultats" class="accordion-collapse collapse" aria-labelledby="headingResultats"
-                data-parent="#accordionExample">
-                <div class="accordion-body">
-                  <pre class="text-wrap"> {{ memo.resultats }}</pre>
-                </div>
-              </div>
-            </div>
-            <div class="card px-3 py-2 mb-4 shadow accordion-item">
-              <div class="d-flex justify-content-between accordion-header bg-transparent py-3" data-toggle="collapse"
-                data-target="#collapsePlaning" aria-expanded="false" aria-controls="collapsePlaning">
-                <h2 class="" id="headingPlaning">
-                  <small class="badge bg-primary text-white">7</small>
-                  <span class="badge fs-1">Planing</span>
-                </h2>
-                <i class="fa fa-angle-down btn"></i>
-              </div>
-              <div id="collapsePlaning" class="accordion-collapse collapse" aria-labelledby="headingPlaning"
-                data-parent="#accordionExample">
-                <div class="accordion-body">
-                  <pre class="text-wrap"> {{ memo.planing }}</pre>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </section>
+      {% include "includes/memo-detail.html" %}
       </div>
       <div class="col-md-4 col-12 bg-white p-3">
         {% if not memo.fichier %}
         <div class="mb-5 ">
           <h5>{% if not memo.directeur %}Assigner un{% else %}Changer de{% endif %} directeur de mémoire</h5>
-          <form action="{% url 'memoires.modifier' id=memo.id %}" method="post" id="assigner_directeur" class="col-12">
+          <form action="{% url 'memoires.modifier.directeur' id=memo.id %}" method="post" id="assigner_directeur" class="col-12">
             {% csrf_token %}
             <div class="my-3">
               {{ form.directeur }}
@@ -237,11 +69,11 @@
         <div class="mb-5">
             <h5>Historique</h5>
             <!-- upload.html -->
-          <ul class="list-unstyled">
+          <ul class="mt-3">
               {% for his in memo.memoirehistory_set.all %}
-            <li><a href="#" class="grid">
+            <li class="mb-3"><a href="#" class="grid">
               <div class="notification_desc">
-                <p>{{his.get_action_display}}</p>
+                <p class="text-dark text-bold fs-1">{{his.get_action_display}}</p>
                 <span>{{his.date_action}}</span>
               </div>
             </a></li>
@@ -251,12 +83,7 @@
         <div class="mb-5">
             <h5>Discussion privée</h5>
             <!-- upload.html -->
-            <ul class="list-unstyled">
-              <li>
-                <div class="notification_header">
-                  <h3>You have 4 new messages</h3>
-                </div>
-              </li>
+            <ul class="list-unstyled mt-3">
               <li><a href="#" class="grid">
                   <div class="notification_desc">
                     <p>Johnson purchased template</p>

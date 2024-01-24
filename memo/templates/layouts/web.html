@@ -54,6 +54,7 @@ Author URL: http://w3layouts.com
 
     <link rel="stylesheet" href="{% static 'assets/css/style-starter.css' %}" />
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
     <!-- google fonts -->
     <link
       href="//fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900&display=swap"
@@ -63,32 +64,28 @@ Author URL: http://w3layouts.com
 
   <body class="sidebar-menu-collapsed">
     <div class="se-pre-con"></div>
-    {% include "includes/nav-sidebar.html" %}
+    <div class="header sticky-header">
+
+      <!-- notification menu start -->
+      <div class="menu">
+        <div class="navbar d-flex justify-content-between">
+        <div class="text-primary fs-1"><a href="{% url 'accueil'%}">MEMOMAN</a></div>
+        <div class="search-box">
+            <form action="#search-results.html" method="get">
+              <input class="search-input" placeholder="Search Here..." type="search" id="search">
+              <button class="search-submit" value=""><span class="fa fa-search"></span></button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!--notification menu end -->
+    </div>
     <section>
       <!-- //header-ends -->
       <!-- main content start -->
       <div class="main-content">
         <!-- content -->
 <div class="container-fluid content-top-gap">
-  <div class="d-flex justify-content-end">
-    {% if messages %}
-    {% for message in messages %}
-      {% if message.tags == "success" %}
-      <div class="alert alert-success alert-dismissible text-black ms-auto col-6 d-flex justify-content-end"
-      role="alert">
-        {{ message }}
-        <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">×</button>
-      </div>
-      {% else %}
-      <div class="alert alert-danger alert-dismissible text-black ms-auto col-6 d-flex justify-content-between"
-      role="alert">
-        {{ message }}
-        <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">×</button>
-      </div>
-      {% endif %}
-    {% endfor %}
-  {% endif %}
-  </div>
 
   {% block content %}{% endblock content %}
       </div>
@@ -98,7 +95,7 @@ Author URL: http://w3layouts.com
       <!-- main content end-->
     </section>
     <!--footer section start-->
-    <footer class="dashboard">
+    <footer class="">
       <p>
         &copy 2020 Collective. All Rights Reserved | Design by
         <a href="https://w3layouts.com/" target="_blank" class="text-primary"

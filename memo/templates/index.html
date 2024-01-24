@@ -1,0 +1,62 @@
+{% extends 'layouts/web.html' %}
+
+{% block title %} Memo Manager {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="text-center">
+  <h1 class="my-3 text-primary">Gestionnaire de Mémoires</h1>
+  <p class="h4 mb-3">Plongez-vous dans une collection diversifiée de mémoires couvrant un large éventail de sujets. Que
+    vous soyez passionné par les sciences, les arts, la technologie ou les sciences sociales, vous trouverez des
+    mémoires captivants qui susciteront votre curiosité.</p>
+
+  <div class="d-flex justify-content-center">
+    <form action="#" method="get" class="col-8">
+      <div class="form-row">
+        <div class="col-md-4 mb-3">
+          <label for="validationCustom01">Thème</label>
+          <input type="text" readonly class="form-control" id="validationCustom01" placeholder="First name" value=""
+            required>
+        </div>
+        <div class="col-md-4 mb-3">
+          <label for="validationCustom02">Domaine</label>
+          <input type="text" readonly class="form-control" id="validationCustom02" placeholder="Last name" value="Informatique Système" required>
+        </div>
+        <div class="col-md-4 mb-3">
+          <label for="validationCustomUsername">Tags</label>
+          <input type="text" readonly class="form-control" id="validationCustom02" placeholder="Last name" value="IA" required>
+        </div>
+      </div>
+      <button class="btn btn-primary disabled" type="submit">Filtrer</button>
+
+    </form>
+  </div>
+</div>
+
+<div class="card-columns mt-5">
+  {% for memo in memoires %}
+  <div class="card border">
+    <div class="card-body">
+      <h5 class="card-title">{{ memo.theme }}</h5>
+      <p class="card-text">{{ memo.contexte }}</p>
+      <blockquote class="blockquote my-3">
+        <footer class="blockquote-footer"><cite title="Source Title">{{ memo.etudiant.specialite.libelle }}</cite>
+          &mdash; {{ memo.etudiant.specialite.Niveau.libelle }}</footer>
+      </blockquote>
+      <p class="card-text"><small class="text-muted">{{ memo.etudiant.utilisateur.get_fullname }}</small></p>
+      <a href="{% url 'consulter' id=memo.id %}" class="btn btn-primary text-center">Consulter</a>
+    </div>
+  </div>
+  {% endfor %}
+
+</div>
+
+
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}{% endblock javascripts %}
